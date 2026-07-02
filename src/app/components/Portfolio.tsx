@@ -92,7 +92,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0a0a1a 0%, #101028 50%, #161640 100%)',
     accentColor: '#F59E0B',
     icon: ExternalLink,
-    href: undefined as string | undefined,
+    href: 'https://myportfolio-rose-pi-89.vercel.app/',
     image: portfolioScreenshot as string,
   },
   {
@@ -431,7 +431,7 @@ function ProjectCard({
             marginTop: '0.75rem',
             transition: 'color 200ms ease',
           }}>
-            View on Google Drive →
+            {project.category === 'web' ? 'Go to Website →' : 'View on Google Drive →'}
           </p>
         )}
       </div>
