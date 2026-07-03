@@ -3,14 +3,15 @@ import { ExternalLink, Play, Eye } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 import { SectionLabel } from './About';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import portfolioScreenshot from '../../imports/Screenshot_2026-07-02_171746.png';
-import landingPageScreenshot from '../../imports/pay.JPG';
-import eventPoster from '../../imports/exam.jpg';
-import brandingPoster from '../../imports/Doorstep.png';
-import tahseen from '../../imports/tahseen.png';
-import day1 from '../../imports/Day 1.mp4';
-import day2 from '../../imports/day2.mp4';
-import afriSouq from '../../imports/AfriSouq Express.mp4';
+
+const portfolioScreenshot = new URL('../../imports/Screenshot_2026-07-02_171746.png', import.meta.url).href;
+const landingPageScreenshot = new URL('../../imports/pay.JPG', import.meta.url).href;
+const eventPoster = new URL('../../imports/exam.jpg', import.meta.url).href;
+const brandingPoster = new URL('../../imports/Doorstep.png', import.meta.url).href;
+const tahseen = new URL('../../imports/tahseen.png', import.meta.url).href;
+const day1 = new URL('../../imports/Day 1.mp4', import.meta.url).href;
+const day2 = new URL('../../imports/day2.mp4', import.meta.url).href;
+const afriSouq = new URL('../../imports/AfriSouq Express.mp4', import.meta.url).href;
 
 interface PortfolioProps {
   isDark: boolean;
@@ -283,19 +284,34 @@ function ProjectCard({
   useEffect(() => {
     if (!videoRef.current || !hasVideo) return;
 
+    const video = videoRef.current;
+    video.muted = false;
+
     if (isHover) {
-      const playPromise = videoRef.current.play();
+      const playPromise = video.play();
       if (playPromise && typeof playPromise.catch === 'function') {
         playPromise.catch(() => undefined);
       }
     } else {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
+      video.pause();
+      video.currentTime = 0;
     }
   }, [isHover, hasVideo]);
 
   const handleClick = () => {
     if (project.href) window.open(project.href, '_blank', 'noopener,noreferrer');
+  };
+
+  const mediaStyle: React.CSSProperties = {
+    width: '100%',
+    height: '100%',
+    minWidth: '100%',
+    minHeight: '100%',
+    display: 'block',
+    objectFit: 'cover',
+    objectPosition: 'center center',
+    transform: isHover ? 'scale(1.04)' : 'scale(1)',
+    transition: 'transform 400ms ease',
   };
 
   return (
@@ -332,18 +348,20 @@ function ProjectCard({
           <video
             ref={videoRef}
             src={project.video}
+            autoPlay={false}
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
+            onEnded={() => {
+              if (videoRef.current) {
+                videoRef.current.currentTime = 0;
+                videoRef.current.play().catch(() => undefined);
+              }
+            }}
             style={{
+              ...mediaStyle,
               position: 'absolute',
               inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'top center',
-              transform: isHover ? 'scale(1.04)' : 'scale(1)',
-              transition: 'transform 400ms ease',
             }}
           />
         ) : hasImage ? (
@@ -351,17 +369,44 @@ function ProjectCard({
             src={project.image}
             alt={project.title}
             style={{
+              ...mediaStyle,
               position: 'absolute',
               inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'top center',
-              transform: isHover ? 'scale(1.04)' : 'scale(1)',
-              transition: 'transform 400ms ease',
             }}
           />
         ) : null}
+
+        {hasVideo && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'none',
+              opacity: isHover ? 0.2 : 0.85,
+              transition: 'opacity 250ms ease',
+            }}
+          >
+            <div
+              style={{
+                width: '46px',
+                height: '46px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.18)',
+                border: '1px solid rgba(255,255,255,0.24)',
+                backdropFilter: 'blur(8px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 10px 24px rgba(0,0,0,0.25)',
+              }}
+            >
+              <Play size={18} fill="white" style={{ marginLeft: '2px', color: 'white' }} />
+            </div>
+          </div>
+        )}
 
         {/* Hover overlay */}
         <div
