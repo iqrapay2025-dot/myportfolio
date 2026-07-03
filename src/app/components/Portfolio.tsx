@@ -273,6 +273,7 @@ function ProjectCard({
   mutedColor: string;
 }) {
   const [isHover, setIsHover] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const Icon = project.icon;
   const cardBg = isDark ? '#141414' : '#ffffff';
@@ -295,6 +296,7 @@ function ProjectCard({
     } else {
       video.pause();
       video.currentTime = 0;
+      setIsVideoPlaying(false);
     }
   }, [isHover, hasVideo]);
 
@@ -352,7 +354,10 @@ function ProjectCard({
             loop
             playsInline
             preload="auto"
+            onPlaying={() => setIsVideoPlaying(true)}
+            onPause={() => setIsVideoPlaying(false)}
             onEnded={() => {
+              setIsVideoPlaying(false);
               if (videoRef.current) {
                 videoRef.current.currentTime = 0;
                 videoRef.current.play().catch(() => undefined);
@@ -385,8 +390,9 @@ function ProjectCard({
               alignItems: 'center',
               justifyContent: 'center',
               pointerEvents: 'none',
-              opacity: isHover ? 0.2 : 0.85,
-              transition: 'opacity 250ms ease',
+              opacity: isVideoPlaying ? 0 : 0.85,
+              transition: 'opacity 300ms ease, transform 300ms ease',
+              transform: isVideoPlaying ? 'scale(0.96)' : 'scale(1)',
             }}
           >
             <div
