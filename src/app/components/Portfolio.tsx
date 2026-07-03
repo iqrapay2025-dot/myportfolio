@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ExternalLink, Play, Eye } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 import { SectionLabel } from './About';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import portfolioScreenshot from '../../imports/Screenshot_2026-07-02_171746.png';
+import landingPageScreenshot from '../../imports/pay.JPG';
+import eventPoster from '../../imports/exam.jpg';
+import brandingPoster from '../../imports/Doorstep.png';
+import tahseen from '../../imports/tahseen.png';
+import day1 from '../../imports/Day 1.mp4';
+import day2 from '../../imports/day2.mp4';
+import afriSouq from '../../imports/AfriSouq Express.mp4';
 
 interface PortfolioProps {
   isDark: boolean;
@@ -25,6 +32,7 @@ const projects = [
     accentColor: '#F59E0B',
     icon: Play,
     href: DRIVE_URL,
+    video: day1 as string,
   },
   {
     id: 2,
@@ -36,6 +44,7 @@ const projects = [
     accentColor: '#F97316',
     icon: Play,
     href: DRIVE_URL,
+    video: day2 as string,
   },
   {
     id: 3,
@@ -47,6 +56,7 @@ const projects = [
     accentColor: '#FBBF24',
     icon: Play,
     href: DRIVE_URL,
+    video: afriSouq as string,
   },
   // Design projects
   {
@@ -58,7 +68,8 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0a1628 0%, #0d2137 50%, #122d45 100%)',
     accentColor: '#F59E0B',
     icon: Eye,
-    href: undefined as string | undefined,
+    href: 'https://drive.google.com/drive/folders/1Qx53zseF7vjareaV6fV7w5qvQ82SJ7Ze?usp=sharing',
+    image: tahseen as string,
   },
   {
     id: 5,
@@ -69,7 +80,8 @@ const projects = [
     gradient: 'linear-gradient(135deg, #1a0a0a 0%, #2d1010 50%, #401616 100%)',
     accentColor: '#F97316',
     icon: Eye,
-    href: undefined as string | undefined,
+    href: 'https://drive.google.com/drive/folders/1Qx53zseF7vjareaV6fV7w5qvQ82SJ7Ze?usp=sharing',
+    image: brandingPoster as string,
   },
   {
     id: 6,
@@ -80,7 +92,8 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0a1a0a 0%, #102810 50%, #163a16 100%)',
     accentColor: '#FBBF24',
     icon: Eye,
-    href: undefined as string | undefined,
+    href: 'https://drive.google.com/drive/folders/1Qx53zseF7vjareaV6fV7w5qvQ82SJ7Ze?usp=sharing',
+    image: eventPoster as string,
   },
   // Web/Vibe-coded projects
   {
@@ -104,7 +117,8 @@ const projects = [
     gradient: 'linear-gradient(135deg, #1a0a1a 0%, #280f28 50%, #3a163a 100%)',
     accentColor: '#F97316',
     icon: ExternalLink,
-    href: undefined as string | undefined,
+    href: 'https://www.iqrapay.com.ng',
+    image: landingPageScreenshot as string,
   },
 ];
 
@@ -258,10 +272,27 @@ function ProjectCard({
   mutedColor: string;
 }) {
   const [isHover, setIsHover] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const Icon = project.icon;
   const cardBg = isDark ? '#141414' : '#ffffff';
   const cardBorder = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
   const isClickable = !!project.href;
+  const hasImage = 'image' in project && !!project.image;
+  const hasVideo = 'video' in project && !!project.video;
+
+  useEffect(() => {
+    if (!videoRef.current || !hasVideo) return;
+
+    if (isHover) {
+      const playPromise = videoRef.current.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => undefined);
+      }
+    } else {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isHover, hasVideo]);
 
   const handleClick = () => {
     if (project.href) window.open(project.href, '_blank', 'noopener,noreferrer');
@@ -296,8 +327,26 @@ function ProjectCard({
           overflow: 'hidden',
         }}
       >
-        {/* Screenshot image (shown when available) */}
-        {'image' in project && project.image && (
+        {/* Media preview */}
+        {hasVideo ? (
+          <video
+            ref={videoRef}
+            src={project.video}
+            loop
+            playsInline
+            preload="metadata"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'top center',
+              transform: isHover ? 'scale(1.04)' : 'scale(1)',
+              transition: 'transform 400ms ease',
+            }}
+          />
+        ) : hasImage ? (
           <ImageWithFallback
             src={project.image}
             alt={project.title}
@@ -312,23 +361,23 @@ function ProjectCard({
               transition: 'transform 400ms ease',
             }}
           />
-        )}
+        ) : null}
 
         {/* Hover overlay */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'image' in project && project.image
+            background: hasImage || hasVideo
               ? `linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.65) 100%)`
               : `${project.accentColor}18`,
-            opacity: isHover ? 1 : ('image' in project && project.image ? 0 : 0),
+            opacity: isHover ? 1 : (hasImage || hasVideo ? 0 : 0),
             transition: 'opacity 300ms ease',
           }}
         />
 
-        {/* Center icon — only shown on cards without a screenshot */}
-        {!('image' in project && project.image) && (
+        {/* Center icon — only shown on cards without media */}
+        {!hasImage && !hasVideo && (
           <div
             style={{
               position: 'absolute',
@@ -431,7 +480,7 @@ function ProjectCard({
             marginTop: '0.75rem',
             transition: 'color 200ms ease',
           }}>
-            {project.category === 'web' ? 'Go to Website →' : 'View on Google Drive →'}
+            {project.category === 'web' ? 'Go to Website' : 'View on Google Drive'}
           </p>
         )}
       </div>
