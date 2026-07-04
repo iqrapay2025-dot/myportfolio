@@ -26,7 +26,7 @@ const services = [
   },
   {
     icon: Code2,
-    title: 'Web Developer',
+    title: 'Web Development',
     description:
       'Building functional, good-looking websites using AI-assisted tools — fast iteration, real results, no long dev cycles.',
     accent: '#FBBF24',

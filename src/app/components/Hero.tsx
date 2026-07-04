@@ -5,7 +5,7 @@ interface HeroProps {
   isDark: boolean;
 }
 
-const roles = ['Video Editor', 'Graphic Designer', 'Web Development', 'Reciter'];
+const roles = ['Video Editor', 'Graphic Designer', 'Web Developer', 'Reciter'];
 
 export function Hero({ isDark }: HeroProps) {
   const [displayText, setDisplayText] = useState('');
