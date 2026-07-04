@@ -19,7 +19,7 @@ interface PortfolioProps {
 
 type Category = 'all' | 'video' | 'design' | 'web';
 
-const DRIVE_URL = 'https://drive.google.com/drive/folders/1vpeWYB5oF39lP5_5irpvzqnhWKp7xKLY?usp=sharing';
+// const DRIVE_URL = 'https://drive.google.com/drive/folders/1vpeWYB5oF39lP5_5irpvzqnhWKp7xKLY?usp=sharing';
 
 const projects = [
   // Video projects first
@@ -32,7 +32,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
     accentColor: '#F59E0B',
     icon: Play,
-    href: DRIVE_URL,
+    href: 'https://drive.google.com/file/d/1akw6Zn8vBw2WaDl5Jy-YOXnHcUsgVdp0/view?usp=drive_link',
     video: day1 as string,
   },
   {
@@ -44,7 +44,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #2d1b00 0%, #4a2f00 50%, #6b4300 100%)',
     accentColor: '#F97316',
     icon: Play,
-    href: DRIVE_URL,
+    href: 'https://drive.google.com/file/d/10RikYzqzepHOTot1Muu79gUP4mR4utN8/view?usp=drive_link',
     video: day2 as string,
   },
   {
@@ -56,7 +56,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0d0d0d 0%, #1a0a2e 50%, #2d1462 100%)',
     accentColor: '#FBBF24',
     icon: Play,
-    href: DRIVE_URL,
+    href: 'https://drive.google.com/file/d/1nAli4u5NjnkoJ4pEXUUEwMLi0J8svvdH/view?usp=drive_link',
     video: afriSouq as string,
   },
   // Design projects
