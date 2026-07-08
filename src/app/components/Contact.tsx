@@ -1,4 +1,5 @@
 import { useState } from 'react';
+const musicImg = new URL('../../imports/music.png', import.meta.url).href;
 import { Phone, Mail, Send, CheckCircle } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 import { SectionLabel } from './About';
@@ -27,6 +28,10 @@ function XIcon({ size = 18 }: { size?: number }) {
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
+}
+
+function AudiomackIcon({ size = 18 }: { size?: number }) {
+  return <img src={musicImg} alt="Audiomack" style={{ width: size, height: size, objectFit: 'contain' }} />;
 }
 
 interface ContactProps {
@@ -163,6 +168,14 @@ export function Contact({ isDark }: ContactProps) {
                     label="Instagram"
                     href="https://www.instagram.com/the_tranquil1?igsh=a2lhcWw1OWs5cWMx"
                     brandColor="#E1306C"
+                    textColor={textColor}
+                    cardBorder={cardBorder}
+                  />
+                  <SocialBtn
+                    icon={AudiomackIcon}
+                    label="Audiomack"
+                    href="https://audiomack.com/ibnsalman"
+                    brandColor="#FFCD00"
                     textColor={textColor}
                     cardBorder={cardBorder}
                   />

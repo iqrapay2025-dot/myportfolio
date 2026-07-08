@@ -4,6 +4,8 @@ import { AnimatedSection } from './AnimatedSection';
 import { SectionLabel } from './About';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+// Note: browsers typically block autoplay with sound. We'll attempt to unmute on hover below.
+
 const portfolioScreenshot = new URL('../../imports/Screenshot_2026-07-02_171746.png', import.meta.url).href;
 const landingPageScreenshot = new URL('../../imports/pay.JPG', import.meta.url).href;
 const eventPoster = new URL('../../imports/exam.jpg', import.meta.url).href;
@@ -157,6 +159,7 @@ export function Portfolio({ isDark }: PortfolioProps) {
       />
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative' }}>
+        {/* attempting direct unmute on hover (no enable button) */}
         <AnimatedSection delay={0}>
           <SectionLabel>Selected Work</SectionLabel>
         </AnimatedSection>
@@ -286,16 +289,27 @@ function ProjectCard({
     if (!videoRef.current || !hasVideo) return;
 
     const video = videoRef.current;
-    video.muted = false;
-
     if (isHover) {
+      // Try to unmute and play on hover. Browsers may still block autoplay with sound.
+      try {
+        video.muted = false;
+      } catch (_) {}
       const playPromise = video.play();
       if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => undefined);
+        playPromise.catch(() => {
+          // If playing with sound is blocked, fall back to muted autoplay
+          try {
+            video.muted = true;
+            video.play().catch(() => undefined);
+          } catch (_) {}
+        });
       }
     } else {
       video.pause();
       video.currentTime = 0;
+      try {
+        video.muted = true;
+      } catch (_) {}
       setIsVideoPlaying(false);
     }
   }, [isHover, hasVideo]);
