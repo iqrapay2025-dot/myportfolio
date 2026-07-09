@@ -9,6 +9,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 const portfolioScreenshot = new URL('../../imports/Screenshot_2026-07-02_171746.png', import.meta.url).href;
 const landingPageScreenshot = new URL('../../imports/pay.JPG', import.meta.url).href;
 const eventPoster = new URL('../../imports/exam.jpg', import.meta.url).href;
+const Feeyah = new URL('../../imports/feeyah.JPG', import.meta.url).href;
 const brandingPoster = new URL('../../imports/Doorstep.png', import.meta.url).href;
 const tahseen = new URL('../../imports/tahseen.png', import.meta.url).href;
 const day1 = new URL('../../imports/Day 1.mp4', import.meta.url).href;
@@ -113,7 +114,7 @@ const projects = [
   },
   {
     id: 8,
-    title: 'Landing Page',
+    title: 'IqraPay',
     category: 'web' as Category,
     label: 'Web',
     description: 'High-converting landing page for a SaaS product with animations.',
@@ -122,6 +123,18 @@ const projects = [
     icon: ExternalLink,
     href: 'https://www.iqrapay.com.ng',
     image: landingPageScreenshot as string,
+  },
+  {
+    id: 8,
+    title: 'Feeyah Signature',
+    category: 'web' as Category,
+    label: 'Web',
+    description: 'A polished web presence for a confectionery brand featuring pastries, baking, and premium treats.',
+    gradient: 'linear-gradient(135deg, #1a0a1a 0%, #280f28 50%, #3a163a 100%)',
+    accentColor: '#A855F7',
+    icon: ExternalLink,
+    href: 'https://feeyah.vercel.app/',
+    image: Feeyah as string,
   },
 ];
 
