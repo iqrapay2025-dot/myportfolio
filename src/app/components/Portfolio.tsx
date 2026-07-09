@@ -123,7 +123,7 @@ const projects = [
     accentColor: "#F59E0B",
     icon: ExternalLink,
     href: "https://myportfolio-rose-pi-89.vercel.app/",
-    image: Obsidian as string,
+    image: portfolioScreenshot as string,
   },
   {
     id: 8,
