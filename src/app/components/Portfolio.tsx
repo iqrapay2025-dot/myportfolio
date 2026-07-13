@@ -15,6 +15,7 @@ const landingPageScreenshot = new URL("../../imports/pay.JPG", import.meta.url)
 const eventPoster = new URL("../../imports/exam.jpg", import.meta.url).href;
 const Feeyah = new URL("../../imports/feeyah.JPG", import.meta.url).href;
 const Obsidian = new URL("../../imports/obsi.JPG", import.meta.url).href;
+const JaysHair = new URL("../../imports/jays.png", import.meta.url).href;
 const brandingPoster = new URL("../../imports/Doorstep.png", import.meta.url)
   .href;
 const tahseen = new URL("../../imports/tahseen.png", import.meta.url).href;
@@ -163,6 +164,19 @@ const projects = [
     icon: ExternalLink,
     href: "https://obsidian-crochet.vercel.app/",
     image: Obsidian as string,
+  },
+  {
+    id: 11,
+    title: "Jays Hair",
+    category: "web" as Category,
+    label: "Web",
+    description:
+      "Modern e-commerce experience for Jays Hair, showcasing beauty services, product collections, and online booking.",
+    gradient: "linear-gradient(135deg, #1a0a1a 0%, #280f28 50%, #3a163a 100%)",
+    accentColor: "rgb(194, 112, 77)",
+    icon: ExternalLink,
+    href: "https://jayshair.vercel.app/",
+    image: JaysHair as string,
   },
 ];
 
