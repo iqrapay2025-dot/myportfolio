@@ -14,7 +14,7 @@ const landingPageScreenshot = new URL("../../imports/pay.JPG", import.meta.url)
   .href;
 const eventPoster = new URL("../../imports/exam.jpg", import.meta.url).href;
 const Feeyah = new URL("../../imports/feeyah.JPG", import.meta.url).href;
-const Obsidian = new URL("../../imports/obsi.JPG", import.meta.url).href;
+const Obsidian = new URL("../../imports/obsii.JPG", import.meta.url).href;
 const JaysHair = new URL("../../imports/jays.png", import.meta.url).href;
 const brandingPoster = new URL("../../imports/Doorstep.png", import.meta.url)
   .href;
